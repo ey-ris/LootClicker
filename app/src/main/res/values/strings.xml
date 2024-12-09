@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LootClicker</string>
+    <string name="click">Click!</string>
+    <string name="loot_clicker">LOOT CLICKER</string>
+    <string name="coins">Coins:</string>
+    <string name="_0">0</string>
 </resources>
