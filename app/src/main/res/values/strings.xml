@@ -8,4 +8,10 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="welcomeText">Welcome to\nLoot Clicker</string>
+    <string name="create_your_account">Create your account</string>
+    <string name="sign_up_for_loot_clicker">Sign up for Loot Clicker</string>
+    <string name="create_an_account_or_log_in">Create an account or Log in</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log in</string>
+    <string name="create_an_account_or">Create an account or</string>
 </resources>
