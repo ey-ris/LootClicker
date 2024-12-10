@@ -47,7 +47,6 @@ public class AppRepository {
                 }
         );
     }
-
     public LiveData<User> getUserByUserName(String username) {
         return userDAO.getUserByUserName(username);
     }
