@@ -8,23 +8,37 @@
     tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/titleLoginTextView"
+        android:id="@+id/welcomeTitleTextView"
         android:layout_width="match_parent"
-        android:layout_height="150dip"
-        android:layout_margin="16dip"
-        android:layout_marginBottom="24dip"
+        android:layout_height="30dip"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:text="@string/welcomeText"
-        android:textSize="42sp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleLoginTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginBottom="440dip"
+        android:gravity="center"
+        android:text="@string/loot_clicker"
+        android:textColor="@color/black"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcomeTitleTextView" />
 
     <EditText
         android:id="@+id/userNameLoginEditText"
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:layout_margin="16dp"
+        android:layout_margin="30dp"
         android:autofillHints="Please enter Username"
         android:gravity="center"
         android:hint="@string/username"
@@ -51,12 +65,25 @@
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
-        android:layout_height="105dp"
-        android:layout_margin="16dp"
-        android:text="@string/login"
+        android:layout_height="100dp"
+        android:layout_margin="50dp"
+        android:backgroundTint="#000000"
+        android:text="@string/log_in"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/passwordLoginEditText"/>
+        app:layout_constraintTop_toBottomOf="@id/passwordLoginEditText" />
+
+    <Button
+        android:id="@+id/signupButtonLoginPage"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="50dp"
+        android:backgroundTint="#000000"
+        android:text="@string/sign_up"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
