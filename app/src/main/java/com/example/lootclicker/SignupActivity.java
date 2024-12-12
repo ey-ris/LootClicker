@@ -11,8 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 import com.example.lootclicker.database.AppRepository;
+import com.example.lootclicker.database.entities.Player;
 import com.example.lootclicker.database.entities.User;
 import com.example.lootclicker.databinding.ActivitySignupBinding;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
     Sam Numan
@@ -67,6 +71,7 @@ public class SignupActivity extends AppCompatActivity {
                     String password = binding.passwordSignupEditText.getText().toString();
                     user = new User(username, password);
                     repository.insertUser(user);
+                    repository.insertPlayer(new Player(0,1,0,0,new HashMap<>(),new ArrayList<>(), user.getUserId()));
                     Toast.makeText(this, "User Added - proceed to login", Toast.LENGTH_SHORT).show();
                 }
             });
