@@ -12,7 +12,7 @@ import com.example.lootclicker.database.entities.User;
 @Dao
 public interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(User... user);
+    long insert(User user);
 
     @Delete
     void delete(User user);

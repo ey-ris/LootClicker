@@ -6,9 +6,10 @@ import androidx.room.PrimaryKey;
 import com.example.lootclicker.database.AppDatabase;
 
 import java.util.Objects;
+
 @Entity(tableName = AppDatabase.USER_TABLE)
 public class User {
-@PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
     private int userId;
     private String username;
     private String password;

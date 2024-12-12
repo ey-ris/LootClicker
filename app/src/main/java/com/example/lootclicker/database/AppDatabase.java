@@ -11,15 +11,20 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.lootclicker.MainActivity;
+import com.example.lootclicker.database.entities.Player;
 import com.example.lootclicker.database.entities.User;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-//@TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+
+@Database(entities = {User.class, Player.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String USER_TABLE = "usertable";
+    public static final String PLAYER_TABLE = "player_table";
+    public static final String ITEM_TABLE = "item_table";
     private static final String DATABASE_NAME = "LootClickerDatabase";
 
     private static volatile AppDatabase INSTANCE;
@@ -27,10 +32,11 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
 
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-    static AppDatabase getDatabase(final Context context){
-        if (INSTANCE == null){
-            synchronized (AppDatabase.class){
-                if (INSTANCE == null){
+
+    static AppDatabase getDatabase(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (AppDatabase.class) {
+                if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class,
                                     DATABASE_NAME
@@ -44,23 +50,34 @@ public abstract class AppDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback(){
+    private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
         @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db){
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             Log.i(MainActivity.TAG, "DATABASE CREATED!");
             databaseWriteExecutor.execute(() -> {
-                UserDAO dao = INSTANCE.userDao();
-                dao.deleteAll();
+                UserDAO userDAO = INSTANCE.userDao();
+                PlayerDAO playerDAO = INSTANCE.playerDao();
+
+
+                userDAO.deleteAll();
+                playerDAO.deleteAll();
                 User admin = new User("admin1", "admin1");
                 admin.setAdmin(true);
-                dao.insert(admin);
+                userDAO.insert(admin);
+
+                Player player = new Player(0,1,0.01,0.05, 1);
+                playerDAO.insert(player);
 
                 User testUser1 = new User("testUser1", "testUser1");
-                dao.insert(testUser1);
+                userDAO.insert(testUser1);
+                Player player2 = new Player(0,1,0.01,0.05, 2);
+                playerDAO.insert(player2);
             });
         }
     };
 
     public abstract UserDAO userDao();
+
+    public abstract PlayerDAO playerDao();
 }
