@@ -21,7 +21,7 @@ public class Player {
     private long currency;
     private double clickStrength;//How much currency per click
     private double luckyStrike; //Chance of getting an item multiplied by x0.01. More lucky means more access to rarer items.
-    private double critChance; //Chance to do more crits (crits = 2.5x clickStrength)
+    private double critChance; //Chance to do more crits (crits = 3x clickStrength)
     private HashMap<Integer, Integer> equippedItems = new HashMap<>(3);
     private ArrayList<Integer> inventory = new ArrayList<>(20);
     private int userId;
@@ -45,7 +45,7 @@ public class Player {
 //
 //        //If player critChance is higher than the rolled crit, then it's a crit.
 //        if(this.critChance.getValue() >= critChance){
-//            tempClickStrength = (tempClickStrength * 2.5d);
+//            tempClickStrength = (tempClickStrength * 3d);
 //            currency += (long)tempClickStrength;
 //        }
 //

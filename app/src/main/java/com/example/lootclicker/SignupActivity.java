@@ -70,8 +70,10 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
                     String password = binding.passwordSignupEditText.getText().toString();
                     user = new User(username, password);
-                    repository.insertUser(user);
-                    repository.insertPlayer(new Player(0,1,0,0,new HashMap<>(),new ArrayList<>(), user.getUserId()));
+//                    repository.insertUser(user);
+                    Player newPlayer = new Player(0,1,0,0,new HashMap<>(), new ArrayList<>(), -1);
+                    repository.insertUserAndPlayer(user, newPlayer);
+
                     Toast.makeText(this, "User Added - proceed to login", Toast.LENGTH_SHORT).show();
                 }
             });

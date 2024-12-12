@@ -16,16 +16,20 @@ public class ItemModifiersConverter {
             int targetedStat = mod.getTargetedStat();
             double value = mod.getValue();
             int isMultiplicative = mod.isMultiplicative() ? 1 : 0;
-            builder.append(targetedStat).append(":").append(value).append(":").append(isMultiplicative).append(",");
+            builder.append(",").append(targetedStat).append(":").append(value).append(":").append(isMultiplicative);
         }
+        builder = builder.delete(0,1);
 
         return builder.toString();
     }
 
     @TypeConverter
     public List<StatModifier> convertStringToModifiers(String string){
-        String[] splitString = string.split(",");
         List<StatModifier> modifiers = new ArrayList<>();
+        if(string.isEmpty()){
+            return modifiers;
+        }
+        String[] splitString = string.split(",");
 
         for(String values : splitString){
             String[] separation = values.split(":");

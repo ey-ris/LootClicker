@@ -18,13 +18,13 @@ import com.example.lootclicker.database.typeConverters.EquipmentConverter;
 import com.example.lootclicker.database.typeConverters.InventoryConverter;
 import com.example.lootclicker.database.typeConverters.ItemModifiersConverter;
 import com.example.lootclicker.database.typeConverters.ItemTypeConverter;
+import com.example.lootclicker.sandbox.StatModifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-//@TypeConverters(LocalDateTypeConverter.class)
 @TypeConverters({
         ItemModifiersConverter.class,
         ItemTypeConverter.class,
@@ -73,14 +73,25 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
                 userDAO.deleteAll();
+                playerDAO.deleteAll();
                 User admin = new User("admin1", "admin1");
                 admin.setAdmin(true);
-                playerDAO.insert(createPlayer(admin.getUserId()));
                 userDAO.insert(admin);
 
+                Player player = new Player(0,1,0,0,new HashMap<>(), new ArrayList<>(), 1);
+                playerDAO.insert(player);
+
                 User testUser1 = new User("testUser1", "testUser1");
-                playerDAO.insert(createPlayer(testUser1.getUserId()));
                 userDAO.insert(testUser1);
+                Player player2 = new Player(0,1,0,0,new HashMap<>(), new ArrayList<>(), 2);
+                playerDAO.insert(player2);
+
+
+                itemDAO.deleteAll();
+                ArrayList<StatModifier> modifiers = new ArrayList<>();
+                modifiers.add(new StatModifier(0, 2, false));
+                Item item = new Item("Iron Sword", 0, modifiers);
+                itemDAO.insert(item);
             });
         }
     };

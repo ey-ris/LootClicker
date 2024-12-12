@@ -22,6 +22,9 @@ public interface ItemDAO {
     @Query("SELECT * FROM " + AppDatabase.ITEM_TABLE)
     List<Item> getAllItems();
 
-    @Query("SELECT * FROM " + AppDatabase.ITEM_TABLE + " WHERE id = :id")
+    @Query("SELECT * FROM " + AppDatabase.ITEM_TABLE + " WHERE id == :id LIMIT 1")
     LiveData<Item> getItemById(int id);
+
+    @Query("DELETE FROM " + AppDatabase.ITEM_TABLE)
+    void deleteAll();
 }

@@ -18,11 +18,10 @@ public class Item {
     private int equipSlot;
     private List<StatModifier> modifiers;
 
-    public Item(int id, String name, int equipSlot) {
-        this.id = id;
+    public Item(String name, int equipSlot, List<StatModifier> modifiers) {
         this.name = name;
         this.equipSlot = equipSlot;
-        modifiers = new ArrayList<>();
+        this.modifiers = modifiers;
     }
 
     @Override

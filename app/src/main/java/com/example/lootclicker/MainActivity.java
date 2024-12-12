@@ -3,7 +3,6 @@ package com.example.lootclicker;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import com.example.lootclicker.databinding.ActivityMainBinding;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class MainActivity extends AppCompatActivity {
     private static final String MAIN_ACTIVITY_USER_ID = "com.example.lootclicker.MAIN_ACTIVITY_USER_ID";
     private ActivityMainBinding binding;
@@ -26,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private User user;
     private static final int LOGGED_OUT = -1;
     private int loggedInUserId = -1;
-    public int userCurrency = 0;
     public static final String TAG = "SEAQUENCE_GYMLOG";
     private Player player;
 
@@ -45,20 +42,35 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        grabPlayerFromDatabase();
+
         //Main clicking structure of the game
         binding.mainClickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(player == null)return;
-                updateUserCurrencyCount();
+                onPlayerClick();
             }
         });
     }
 
-    void updateUserCurrencyCount() {
-        userCurrency++;
-        binding.currencyCountTextView.setText(String.format("%s", userCurrency));
+    void onPlayerClick() {
+        if (player != null) {
+
+            calculateClick();
+
+            //Update Currency
+            binding.currencyCountTextView.setText(String.format("%s", player.getCurrency()));
+        }
     }
+
+    private void calculateClick() {
+        long currency = player.getCurrency();
+        currency++;
+        player.setCurrency(currency);
+
+        repository.updatePlayer(player);
+    }
+
 
     static Intent mainActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -68,19 +80,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void loginUser(Bundle savedInstanceState) {
 
-        loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
+        loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
 
-        if(loggedInUserId == LOGGED_OUT){
+        if (loggedInUserId == LOGGED_OUT) {
             loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
-            return;
+//            return;
         }
 
-        //Set player up
+        //TODO add sharedpreferences to save login
+    }
+
+    private void grabPlayerFromDatabase() {
         LiveData<Player> playerObserver = repository.getPlayerByUserId(loggedInUserId);
         playerObserver.observe(this, player -> {
-            this.player = player;
+            if (player != null) {
+                this.player = player;
+            }
         });
 
-        //TODO add sharedpreferences to save login
+        if (!repository.playerExists(loggedInUserId)) {
+            player = new Player(0, 1, 0, 0, new HashMap<>(), new ArrayList<>(), loggedInUserId);
+            repository.updatePlayer(player);
+        }
     }
 }

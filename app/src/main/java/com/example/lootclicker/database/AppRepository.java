@@ -49,7 +49,7 @@ public class AppRepository {
     }
 
     //-=-=-=-=-=-=-=-User-=-=-=-=-=-=-=-
-    public void insertUser(User... user) {
+    public void insertUser(User user) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
                     userDAO.insert(user);
                 }
@@ -64,11 +64,29 @@ public class AppRepository {
         return userDAO.getUserByUserId(userId);
     }
 
+    public void insertUserAndPlayer(User user, Player player){
+        AppDatabase.databaseWriteExecutor.execute(() ->{
+            long id = userDAO.insert(user);
+            player.setUserId((int)id);
+            playerDAO.insert(player);
+        });
+    }
+
 
     //-=-=-=-=-=-=-=-Player-=-=-=-=-=-=-=-
     public void insertPlayer(Player player) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             playerDAO.insert(player);
+        });
+    }
+
+    public void deleteAllPlayers() {
+        AppDatabase.databaseWriteExecutor.execute(playerDAO::deleteAll);
+    }
+
+    public void updatePlayer(Player player) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            playerDAO.update(player);
         });
     }
 
@@ -78,6 +96,11 @@ public class AppRepository {
 
     public LiveData<Player> getPlayerByUserId(int userId) {
         return playerDAO.getPlayerByUserId(userId);
+    }
+
+    public boolean playerExists(int userId) {
+        Player player = playerDAO.getPlayerByUserId(userId).getValue();
+        return player != null;
     }
 
     //-=-=-=-=-=-=-=-Items-=-=-=-=-=-=-=-
@@ -92,6 +115,10 @@ public class AppRepository {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             itemDAO.delete(item);
         });
+    }
+
+    public void deleteAll() {
+        AppDatabase.databaseWriteExecutor.execute(itemDAO::deleteAll);
     }
 
     public List<Item> getAllItems() {
