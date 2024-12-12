@@ -2,7 +2,7 @@
     <string name="app_name">LootClicker</string>
     <string name="click">Click!</string>
     <string name="loot_clicker">LOOT CLICKER</string>
-    <string name="coins">Coins:</string>
+    <string name="coins">Score:</string>
     <string name="_0">0</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -14,4 +14,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="log_in">Log in</string>
     <string name="create_an_account_or">Create an account or</string>
+    <string name="player_id">Player ID</string>
+    <string name="admin_view">ADMIN VIEW</string>
+    <string name="ban_button">BAN!</string>
 </resources>
