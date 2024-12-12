@@ -71,7 +71,7 @@ public class SignupActivity extends AppCompatActivity {
                     String password = binding.passwordSignupEditText.getText().toString();
                     user = new User(username, password);
 //                    repository.insertUser(user);
-                    Player newPlayer = new Player(0,1,0,0,new HashMap<>(), new ArrayList<>(), -1);
+                    Player newPlayer = new Player(0,1,0.01,0.05, -1);
                     repository.insertUserAndPlayer(user, newPlayer);
 
                     Toast.makeText(this, "User Added - proceed to login", Toast.LENGTH_SHORT).show();

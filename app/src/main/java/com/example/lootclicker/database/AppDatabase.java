@@ -11,27 +11,16 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.lootclicker.MainActivity;
-import com.example.lootclicker.database.entities.Item;
 import com.example.lootclicker.database.entities.Player;
 import com.example.lootclicker.database.entities.User;
-import com.example.lootclicker.database.typeConverters.EquipmentConverter;
-import com.example.lootclicker.database.typeConverters.InventoryConverter;
-import com.example.lootclicker.database.typeConverters.ItemModifiersConverter;
-import com.example.lootclicker.database.typeConverters.ItemTypeConverter;
-import com.example.lootclicker.sandbox.StatModifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@TypeConverters({
-        ItemModifiersConverter.class,
-        ItemTypeConverter.class,
-        EquipmentConverter.class,
-        InventoryConverter.class
-})
-@Database(entities = {User.class, Player.class, Item.class}, version = 1, exportSchema = false)
+
+@Database(entities = {User.class, Player.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String USER_TABLE = "usertable";
     public static final String PLAYER_TABLE = "player_table";
@@ -69,7 +58,6 @@ public abstract class AppDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 UserDAO userDAO = INSTANCE.userDao();
                 PlayerDAO playerDAO = INSTANCE.playerDao();
-                ItemDAO itemDAO = INSTANCE.itemDao();
 
 
                 userDAO.deleteAll();
@@ -78,31 +66,18 @@ public abstract class AppDatabase extends RoomDatabase {
                 admin.setAdmin(true);
                 userDAO.insert(admin);
 
-                Player player = new Player(0,1,0,0,new HashMap<>(), new ArrayList<>(), 1);
+                Player player = new Player(0,1,0.01,0.05, 1);
                 playerDAO.insert(player);
 
                 User testUser1 = new User("testUser1", "testUser1");
                 userDAO.insert(testUser1);
-                Player player2 = new Player(0,1,0,0,new HashMap<>(), new ArrayList<>(), 2);
+                Player player2 = new Player(0,1,0.01,0.05, 2);
                 playerDAO.insert(player2);
-
-
-                itemDAO.deleteAll();
-                ArrayList<StatModifier> modifiers = new ArrayList<>();
-                modifiers.add(new StatModifier(0, 2, false));
-                Item item = new Item("Iron Sword", 0, modifiers);
-                itemDAO.insert(item);
             });
         }
     };
 
-    private static Player createPlayer(int userId){
-        return new Player(0,1,0,0,new HashMap<>(),new ArrayList<>(), userId);
-    }
-
     public abstract UserDAO userDao();
 
     public abstract PlayerDAO playerDao();
-
-    public abstract ItemDAO itemDao();
 }

@@ -16,6 +16,7 @@ import com.example.lootclicker.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private static final String MAIN_ACTIVITY_USER_ID = "com.example.lootclicker.MAIN_ACTIVITY_USER_ID";
@@ -65,10 +66,46 @@ public class MainActivity extends AppCompatActivity {
 
     private void calculateClick() {
         long currency = player.getCurrency();
-        currency++;
-        player.setCurrency(currency);
+        double clickStrength = player.getClickStrength();
 
+        Random rand = new Random();
+        double luckyStrike = rand.nextDouble();
+        double critStrike = rand.nextDouble();
+
+        if(player.getCritChance() >= critStrike){
+            if(player.getCritChance() > 1.0){
+                //If crit is over 100%,then add the remainder crit strength
+                clickStrength = clickStrength * (3d + (player.getCritChance()-1));
+            }else{
+                clickStrength = clickStrength * 3d;
+            }
+        }
+
+        if(player.getLuckyStrike() >= luckyStrike){
+            getRandomBoost();
+        }
+
+        currency += (long)clickStrength;
+
+        player.setCurrency(currency);
         repository.updatePlayer(player);
+    }
+
+    private void getRandomBoost(){
+        Random random = new Random();
+        double num = random.nextDouble();
+        if(num > 0.9){//
+            player.setLuckyStrike(player.getLuckyStrike() + 0.01);
+            Toast.makeText(this, "You find a lucky item.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(num > 0.55){
+            player.setCritChance(player.getCritChance() + 0.025);
+            Toast.makeText(this, "You learn a new technique.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        player.setClickStrength(player.getClickStrength() + 1.5);
+        Toast.makeText(this, "You find a new sword.", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -99,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (!repository.playerExists(loggedInUserId)) {
-            player = new Player(0, 1, 0, 0, new HashMap<>(), new ArrayList<>(), loggedInUserId);
+            player = new Player(0, 1, 0, 0, loggedInUserId);
             repository.updatePlayer(player);
         }
     }

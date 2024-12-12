@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.lootclicker.MainActivity;
-import com.example.lootclicker.database.entities.Item;
 import com.example.lootclicker.database.entities.Player;
 import com.example.lootclicker.database.entities.User;
 
@@ -18,14 +17,12 @@ import java.util.concurrent.Future;
 public class AppRepository {
     private final UserDAO userDAO;
     private final PlayerDAO playerDAO;
-    private final ItemDAO itemDAO;
     private static AppRepository repository;
 
     private AppRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         this.userDAO = db.userDao();
         this.playerDAO = db.playerDao();
-        this.itemDAO = db.itemDao();
     }
 
     public static AppRepository getRepository(Application application) {
@@ -101,31 +98,5 @@ public class AppRepository {
     public boolean playerExists(int userId) {
         Player player = playerDAO.getPlayerByUserId(userId).getValue();
         return player != null;
-    }
-
-    //-=-=-=-=-=-=-=-Items-=-=-=-=-=-=-=-
-
-    public void insertItem(Item item) {
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            itemDAO.insert(item);
-        });
-    }
-
-    public void deleteItem(Item item) {
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            itemDAO.delete(item);
-        });
-    }
-
-    public void deleteAll() {
-        AppDatabase.databaseWriteExecutor.execute(itemDAO::deleteAll);
-    }
-
-    public List<Item> getAllItems() {
-        return itemDAO.getAllItems();
-    }
-
-    public LiveData<Item> getItemById(int itemId) {
-        return itemDAO.getItemById(itemId);
     }
 }
