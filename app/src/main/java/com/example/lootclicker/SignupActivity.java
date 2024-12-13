@@ -18,7 +18,7 @@ import com.example.lootclicker.databinding.ActivitySignupBinding;
 /*
     Sam Numan
     Last update: 12/10/24
-    This class implements the sign up functionality using the sign up screen and user database
+    This class implements the sign up functionality using the sign up activity and adding new users to the user table in the database
  */
 
 public class SignupActivity extends AppCompatActivity {

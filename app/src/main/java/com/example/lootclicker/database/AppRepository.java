@@ -14,6 +14,16 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+/*
+    Sam Numan
+    Last update: 12/10/24
+    This class is the application's repository that manipulates the tables in the applications database
+
+    Dakota Hyman
+    Last update: 12/12/24
+    Updated to incorporate player table functions
+    */
+
 public class AppRepository {
     private final UserDAO userDAO;
     private final PlayerDAO playerDAO;

@@ -9,6 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.lootclicker.database.AppRepository;
 import com.example.lootclicker.databinding.ActivityMainBinding;
 
+/*
+    Dakota Hyman
+    Last update: 12/12/24
+    Created for Kayla to work on.
+*/
+
 public class AdminActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private AppRepository repository;

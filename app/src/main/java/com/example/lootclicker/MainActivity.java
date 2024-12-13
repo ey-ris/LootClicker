@@ -16,6 +16,16 @@ import com.example.lootclicker.databinding.ActivityMainBinding;
 
 import java.util.Random;
 
+/*
+    Sam Numan
+    Last update: 12/10/24
+    This class is the Main activity holding the game's main functions.
+
+    Dakota Hyman
+    Last update: 12/12/24
+    Wired up the clicker button to update the player table, and receive boosts and deal critical damage.
+*/
+
 public class MainActivity extends AppCompatActivity {
     private static final String MAIN_ACTIVITY_USER_ID = "com.example.lootclicker.MAIN_ACTIVITY_USER_ID";
     private ActivityMainBinding binding;
@@ -94,16 +104,16 @@ public class MainActivity extends AppCompatActivity {
         double num = random.nextDouble();
         if(num > 0.9){//
             player.setLuckyStrike(player.getLuckyStrike() + 0.01);
-            Toast.makeText(this, "You find a lucky item.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You found a lucky item.", Toast.LENGTH_SHORT).show();
             return;
         }
         if(num > 0.55){
             player.setCritChance(player.getCritChance() + 0.025);
-            Toast.makeText(this, "You learn a new technique.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You learned a new technique.", Toast.LENGTH_SHORT).show();
             return;
         }
         player.setClickStrength(player.getClickStrength() + 1.5);
-        Toast.makeText(this, "You find a new sword.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "You found a new sword.", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -121,8 +131,6 @@ public class MainActivity extends AppCompatActivity {
             loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
 //            return;
         }
-
-        //TODO add sharedpreferences to save login
     }
 
     private void grabPlayerFromDatabase() {

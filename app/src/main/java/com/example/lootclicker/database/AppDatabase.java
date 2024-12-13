@@ -16,11 +16,22 @@ import com.example.lootclicker.database.entities.User;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/*
+    Sam Numan
+    Last update: 12/10/24
+    This is the application's database that stores multiple tables including a user table for logging in and signing up
+
+    Dakota Hyman
+    Last update: 12/12/24
+    Added new tables for players and items
+        The item table commented out due to project re-scoping
+ */
+
 @Database(entities = {User.class, Player.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String USER_TABLE = "usertable";
     public static final String PLAYER_TABLE = "player_table";
-    public static final String ITEM_TABLE = "item_table";
+    //public static final String ITEM_TABLE = "item_table";
     private static final String DATABASE_NAME = "LootClickerDatabase";
 
     private static volatile AppDatabase INSTANCE;
