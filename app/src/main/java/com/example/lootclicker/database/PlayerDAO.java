@@ -24,9 +24,8 @@ public interface PlayerDAO {
     @Update
     void update(Player player);
 
-    //Shows all players starting from richest
     @Query("SELECT * FROM " + AppDatabase.PLAYER_TABLE + " ORDER BY currency DESC")
-    List<Player> getAllPlayers();
+    LiveData<List<Player>> getAllPlayers();
 
     @Query("SELECT * FROM " + AppDatabase.PLAYER_TABLE + " WHERE userId == :userId LIMIT 1")
     LiveData<Player> getPlayerByUserId(int userId);

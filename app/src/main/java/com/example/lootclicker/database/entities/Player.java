@@ -35,6 +35,18 @@ public class Player {
 
     //Generated methods
 
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "userId=" + userId +
+                ", score=" + currency +
+                ", clickStrength=" + clickStrength +
+                ", luckyStrike=" + luckyStrike +
+                ", critChance=" + critChance +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
