@@ -18,18 +18,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/banButton"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:text="@string/ban_button"
-        android:textSize="24sp"
-        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playerDisplayRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_margin="16dp"
+        android:padding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chosenPlayerEditText"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/adminTextView"
+        tools:listitem="@layout/player_recycler_item" />
 
     <EditText
         android:id="@+id/chosenPlayerEditText"
@@ -39,10 +38,23 @@
         android:gravity="center"
         android:hint="@string/player_id"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:inputType="numberSigned"
+        app:layout_constraintTop_toBottomOf="@id/playerDisplayRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/banButton"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:text="@string/ban_button"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chosenPlayerEditText"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

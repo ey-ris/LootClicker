@@ -97,8 +97,14 @@ public class AppRepository {
         });
     }
 
-    public List<Player> getAllPlayers() {
+    public LiveData<List<Player>> getAllPlayers() {
         return playerDAO.getAllPlayers();
+    }
+
+    public void banPlayerById(int userId){
+        AppDatabase.databaseWriteExecutor.execute(()->{
+            playerDAO.banUserById(userId);
+        });
     }
 
     public LiveData<Player> getPlayerByUserId(int userId) {
