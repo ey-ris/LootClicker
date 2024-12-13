@@ -60,7 +60,6 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
     }
-
     private void GetInformationFromDisplay(){
         try{
             selectedUserId = Integer.parseInt(binding.chosenPlayerEditText.getText().toString());

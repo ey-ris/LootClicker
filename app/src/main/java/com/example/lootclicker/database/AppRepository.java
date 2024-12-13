@@ -103,12 +103,7 @@ public class AppRepository {
 
     public void banPlayerById(int userId){
         AppDatabase.databaseWriteExecutor.execute(()->{
-            Player player = getPlayerByUserId(userId).getValue();
-            if(player == null) {
-                Log.d(MainActivity.TAG, "Could not find player with userid");
-                return;
-            }
-            player = new Player(-9001,0,0,0,userId);
+            Player player = new Player(-9001,0,0,0, userId);
             updatePlayer(player);
         });
     }
