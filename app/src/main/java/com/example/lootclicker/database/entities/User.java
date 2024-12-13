@@ -7,6 +7,12 @@ import com.example.lootclicker.database.AppDatabase;
 
 import java.util.Objects;
 
+/*
+    Sam Numan
+    Last update: 12/8/24
+    This class represents a user, created for login and signup purposes
+*/
+
 @Entity(tableName = AppDatabase.USER_TABLE)
 public class User {
     @PrimaryKey(autoGenerate = true)

@@ -4,14 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.lootclicker.database.AppRepository;
 import com.example.lootclicker.databinding.ActivityMainBinding;
+
+/*
+    Dakota Hyman
+    Last update: 12/12/24
+    Created for Kayla to work on.
+*/
 
 public class AdminActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
