@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // logout menu
+    // Logout menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -120,12 +120,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout() {
         loggedInUserId = LOGGED_OUT;
-        //updateSharedPreference();
         getIntent().putExtra(MAIN_ACTIVITY_USER_ID, loggedInUserId);
 
         startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
     }
 
+    // Player setup
     void onPlayerClick() {
         if (player != null) {
 
@@ -193,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (loggedInUserId == LOGGED_OUT) {
             loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
-//            return;
         }
 
         LiveData<User> userObserver = repository.getUserByUserId(loggedInUserId);
