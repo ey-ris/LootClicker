@@ -1,11 +1,17 @@
 package com.example.lootclicker;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
@@ -18,12 +24,13 @@ import java.util.Random;
 
 /*
     Sam Numan
-    Last update: 12/10/24
+    Last update: 12/12/24
     This class is the Main activity holding the game's main functions.
+    Update: implemented logout functionality with logout menu
 
     Dakota Hyman
     Last update: 12/12/24
-    Wired up the clicker button to update the player table, and receive boosts and deal critical damage.
+    Updated and Wired up the clicker button to update the player table, and receive boosts and deal critical damage.
 */
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private User user;
     private static final int LOGGED_OUT = -1;
     private int loggedInUserId = -1;
-    public static final String TAG = "SEAQUENCE_GYMLOG";
+    public static final String TAG = "SEAQUENCE_LOOTCLICKER";
     private Player player;
 
     @Override
@@ -60,6 +67,63 @@ public class MainActivity extends AppCompatActivity {
                 onPlayerClick();
             }
         });
+    }
+
+    // logout menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.logoutMenuItem);
+        item.setVisible(true);
+        if (user == null){
+            return false;
+        }
+        item.setTitle(user.getUsername());
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                showLogoutDialog();
+                return false;
+            }
+        });
+        return true;
+    }
+
+    private void showLogoutDialog() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+
+        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+            }
+        });
+
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alertBuilder.create().show();
+    }
+
+    private void logout() {
+        loggedInUserId = LOGGED_OUT;
+        //updateSharedPreference();
+        getIntent().putExtra(MAIN_ACTIVITY_USER_ID, loggedInUserId);
+
+        startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
     }
 
     void onPlayerClick() {
@@ -131,6 +195,14 @@ public class MainActivity extends AppCompatActivity {
             loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
 //            return;
         }
+
+        LiveData<User> userObserver = repository.getUserByUserId(loggedInUserId);
+        userObserver.observe(this, user -> {
+            this.user = user;
+            if (this.user != null) {
+                invalidateOptionsMenu();
+            }
+        });
     }
 
     private void grabPlayerFromDatabase() {
