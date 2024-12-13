@@ -15,9 +15,6 @@ import com.example.lootclicker.database.entities.Player;
 import com.example.lootclicker.database.entities.User;
 import com.example.lootclicker.databinding.ActivitySignupBinding;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /*
     Sam Numan
     Last update: 12/10/24

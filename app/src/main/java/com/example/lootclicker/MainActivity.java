@@ -14,8 +14,6 @@ import com.example.lootclicker.database.entities.Player;
 import com.example.lootclicker.database.entities.User;
 import com.example.lootclicker.databinding.ActivityMainBinding;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
