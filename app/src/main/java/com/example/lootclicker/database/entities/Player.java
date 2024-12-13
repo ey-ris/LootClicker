@@ -1,16 +1,10 @@
 package com.example.lootclicker.database.entities;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.lootclicker.database.AppDatabase;
-import com.example.lootclicker.database.AppRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 @Entity(tableName = AppDatabase.PLAYER_TABLE)

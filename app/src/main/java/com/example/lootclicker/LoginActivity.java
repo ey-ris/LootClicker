@@ -13,6 +13,12 @@ import com.example.lootclicker.database.AppRepository;
 import com.example.lootclicker.database.entities.User;
 import com.example.lootclicker.databinding.ActivityLoginBinding;
 
+/*
+    Sam Numan
+    Last update: 12/10/24
+    This class implements the login functionality using the login activity and retrieving users form the user table in the database
+ */
+
 public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
