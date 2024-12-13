@@ -3,17 +3,19 @@ package com.example.lootclicker;
 import static com.example.lootclicker.MainActivity.TAG;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,11 +23,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lootclicker.database.AppRepository;
 import com.example.lootclicker.database.entities.Player;
 import com.example.lootclicker.databinding.ActivityAdminBinding;
-import com.example.lootclicker.databinding.ActivityMainBinding;
 import com.example.lootclicker.viewHolders.PlayerAdapter;
 import com.example.lootclicker.viewHolders.PlayerViewModel;
 
+/**
+ * This class is the landing page for the Admins
+ * It shows all players and their stats
+ * and gives the option to ban any player
+ * Banning merely prevents them from growing or continuing.
+ *
+ *  Dakota Hyman
+ *  Last update: 12/13/24
+ * */
+
 public class AdminActivity extends AppCompatActivity {
+    private static final String MAIN_ACTIVITY_USER_ID = "com.example.lootclicker.MAIN_ACTIVITY_USER_ID";
     private ActivityAdminBinding binding;
     private AppRepository repository;
 
@@ -79,8 +91,58 @@ public class AdminActivity extends AppCompatActivity {
         selectedUserId = -1;
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.logoutMenuItem);
+        item.setVisible(true);
+        item.setTitle("Admin");
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                showLogoutDialog();
+                return false;
+            }
+        });
+        return true;
+    }
+
+    private void showLogoutDialog() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(AdminActivity.this);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+
+        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+            }
+        });
+
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alertBuilder.create().show();
+    }
+
+    private void logout() {
+        Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), -1);
+        startActivity(intent);
+    }
+
     static Intent adminActivityIntentFactory(Context context) {
-        Intent intent = new Intent(context, AdminActivity.class);
-        return intent;
+        return new Intent(context, AdminActivity.class);
     }
 }

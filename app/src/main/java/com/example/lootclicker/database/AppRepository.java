@@ -103,8 +103,7 @@ public class AppRepository {
 
     public void banPlayerById(int userId){
         AppDatabase.databaseWriteExecutor.execute(()->{
-            Player player = new Player(-9001,0,0,0, userId);
-            updatePlayer(player);
+            playerDAO.banUserById(userId);
         });
     }
 
